@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import GlassCard from "./GlassCard";
 
 type TimeLeft = {
   days: number;
@@ -42,20 +43,14 @@ export default function Countdown({ targetDate }: { targetDate?: string }) {
     <section className="relative z-10 flex justify-center px-4 py-16 sm:py-20 lg:py-24">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
         {Object.entries(time).map(([key, value]) => (
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-4 sm:p-6 text-center min-w-17.5"
-          >
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-              {value}
+          <GlassCard key={key}>
+            <div className="p-6 text-center">
+              <div className="text-4xl font-semibold">{value}</div>
+              <div className="mt-2 text-xs uppercase tracking-widest text-neutral-400">
+                {key}
+              </div>
             </div>
-            <div className="mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400">
-              {key}
-            </div>
-          </motion.div>
+          </GlassCard>
         ))}
       </div>
     </section>
