@@ -2,6 +2,7 @@
 
 
 import { motion } from "framer-motion";
+import { caldina } from "../app/fonts";
 
 
 export default function Hero() {
@@ -13,11 +14,11 @@ export default function Hero() {
                 transition={{ duration: 1 }}
                 className="max-w-4xl"
             >
-                <h1 className="text-6xl md:text-8xl font-semibold bg-linear-to-r from-white via-indigo-300 to-purple-400 bg-clip-text text-transparent">
-                    NovaCloud
+                <h1 className={`text-6xl md:text-8xl font-semibold bg-linear-90 from-[#e7652f] to-[#fcc408] bg-clip-text text-transparent uppercase ${caldina.className }`}>
+                    {process.env.NEXT_PUBLIC_COMPANY_NAME}
                 </h1>
-                <p className="mt-6 text-xl text-neutral-400">
-                    The future of enterprise cloud intelligence
+                <p className="mt-6 text-xl text-neutral-200">
+                    Precision in transactions. <br /> Confidence in tax. <br /> <b className="text-[30px]">Coming Soon.</b>
                 </p>
             </motion.div>
         </section>

@@ -18,11 +18,11 @@ export default function ParticlesBackground() {
             options={{
                 background: { color: "transparent" },
                 particles: {
-                    number: { value: 50 },
-                    color: { value: "#6366f1" },
+                    number: { value: 150 },
+                    color: { value: "#edc285" },
                     opacity: { value: 0.3 },
-                    size: { value: 2 },
-                    move: { enable: true, speed: 0.6 },
+                    size: { value: 3 },
+                    move: { enable: true, speed: 0.8 },
                 },
             }}
             className="absolute inset-0 -z-10"

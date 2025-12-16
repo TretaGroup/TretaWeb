@@ -8,7 +8,7 @@ export default function Page() {
     <main className="relative min-h-screen">
       <ParticlesBackground />
       <Hero />
-      <Countdown targetDate="2026-01-01T00:00:00" />
+      <Countdown targetDate={process.env.NEXT_PUBLIC_DATE_OF_LAUNCH} />
     </main>
   );
 }
