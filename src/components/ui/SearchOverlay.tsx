@@ -155,7 +155,7 @@ export default function SearchOverlay({
               setQuery("");
               onClose();
             }}
-            className="absolute right-6 top-6 rounded-xl p-2 hover:bg-white/20"
+            className="absolute right-6 top-6 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 transition cursor-pointer"
           >
             <X size={28} />
           </button>

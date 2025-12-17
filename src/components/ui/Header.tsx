@@ -107,7 +107,7 @@ export default function Header() {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
-            <button onClick={() => setSearchOpen(true)}>
+            <button onClick={() => setSearchOpen(true)} className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 transition cursor-pointer">
               <Search size={18} />
             </button>
             <ThemeToggle />
