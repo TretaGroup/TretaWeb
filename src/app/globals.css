@@ -3,7 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --glass-bg: rgba(0, 0, 0, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --nav-text: rgb(244 244 245);
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -37,5 +41,4 @@ body {
   from { background-position: 0% 50%; }
   to { background-position: 200% 50%; }
 }
-
 

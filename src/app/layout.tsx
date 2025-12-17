@@ -1,14 +1,17 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import ThemeProvider from "../components/ui/ThemeProvider";
+import { siteContent } from "@/public/data/siteContent";
+import Header from "@/src/components/ui/Header";
 
 const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME ?? "TRETA";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourdomain.com";
 
 export const metadata: Metadata = {
-  title: `${COMPANY_NAME} — Coming Soon`,
+  title: siteContent.seo.title,
   description:
-    "Precision in transactions. Confidence in tax. An enterprise-grade SaaS platform launching soon.",
+    siteContent.seo.description,
 
   keywords: [
     "TRETA",
@@ -30,9 +33,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   openGraph: {
-    title: `${COMPANY_NAME} — Coming Soon`,
+    title: `${COMPANY_NAME}`,
     description:
-      "Precision in transactions. Confidence in tax. Launching soon.",
+      "Precision in transactions. Confidence in tax",
     url: SITE_URL,
     siteName: COMPANY_NAME,
     images: [
@@ -79,9 +82,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-black text-white antialiased overflow-x-hidden">
-        {children}
+        <ThemeProvider>
+          <Header />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
