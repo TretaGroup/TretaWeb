@@ -1,6 +1,8 @@
+import { HeroSlide } from "@/src/types/heroslide";
+
 export const siteContent = {
-navigation: [
-  
+  navigation: [
+
     {
       label: "Services",
       type: "mega",
@@ -48,12 +50,47 @@ navigation: [
       "Treta helps organizations build clarity, confidence, and credibility through strategy, design, and execution.",
   },
 
-
-  hero: {
-    title: "Treta Tagline",
-    subtitle:
-      "Building clarity, confidence, and credibility through strategy and execution.",
+    hero: {
+    slides: [
+      {
+        kicker: "Hello There",
+        title: "Strategy that creates momentum",
+        subtitle: "Clear direction aligned to growth and outcomes.",
+        media: {
+          type: "image",
+          src: "/images/hero/strategy.jpg",
+        },
+        animation: "fadeUp",
+        parallax: 0.25,
+        cta: {
+          primary: { label: "Start a Project", href: "#contact" },
+          secondary: { label: "Our Services", href: "#services" },
+        },
+      },
+      {
+        kicker: "Hello There",
+        title: "Design that earns trust",
+        subtitle: "Human-centered systems that scale beautifully.",
+        media: {
+          type: "video",
+          src: "/videos/hero-design.mp4",
+          poster: "/images/hero/design-poster.jpg",
+        },
+        animation: "slideLeft",
+        parallax: 0.15,
+        cta: {
+          primary: { label: "View Work", href: "#work" },
+          secondary: { label: "Why Treta", href: "#why" },
+        },
+      },
+    ] satisfies HeroSlide[],
   },
+
+
+
+
+
+
 
   services: [
     { title: "Strategy", description: "Clear direction aligned with business goals." },

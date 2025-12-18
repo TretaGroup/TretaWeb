@@ -10,10 +10,7 @@ import PageTransition from "@/src/components/ui/PageTransitionUI";
 export default function HomePage() {
   return (
     <PageTransition>
-      <HeroSection
-        title={siteContent.hero.title}
-        subtitle={siteContent.hero.subtitle}
-      />
+      <HeroSection slides={siteContent.hero.slides} />
 
       <WhatWeDo services={siteContent.services} />
 
