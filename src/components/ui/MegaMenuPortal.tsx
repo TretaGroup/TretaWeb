@@ -3,7 +3,7 @@
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   data: any;
@@ -19,16 +19,31 @@ export default function MegaMenuPortal({
   const [mounted, setMounted] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [active, setActive] = useState(0);
+  const closeTimer = useRef<NodeJS.Timeout | null>(null);
 
-  /* Mount safety (Next.js) */
   useEffect(() => {
     setMounted(true);
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
   }, []);
 
-  /* Do NOT render until everything is ready */
   if (!mounted || !anchorRect) return null;
 
   const items = data.sections.flatMap((s: any) => s.items);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(onClose, 140);
+  };
+
   return createPortal(
     <motion.div
       initial={{ opacity: 0, y: 14 }}
@@ -43,21 +58,22 @@ export default function MegaMenuPortal({
         if (e.key === "ArrowUp")
           setActive((i) => Math.max(i - 1, 0));
       }}
+      onMouseEnter={cancelClose}
+      onMouseLeave={scheduleClose}
       onMouseMove={(e) =>
         setCursor({ x: e.clientX, y: e.clientY })
       }
       style={{
         position: "fixed",
-        top: anchorRect.bottom + 30,
-        left: anchorRect.left- anchorRect.width * 5,
-        transform: "translate3d(-50%, 0, 0)", // NEVER becomes `none`
+        top: anchorRect.bottom + 16,
+        left: anchorRect.left - anchorRect.width * 5,
+        transform: "translate3d(-50%, 0, 0)",
+        paddingTop: 24, // invisible hover bridge
       }}
       className="
-        z-1000
+        z-[1000]
         w-180
-        rounded-3xl
-        bg-[rgba(255,255,255,0.75)]
-        dark:bg-[rgba(0,0,0,0.65)]
+        rounded-3xl bg-[rgba(0,0,0,0.65)]
         backdrop-blur-2xl
         isolate
         border border-[var(--glass-border)]
@@ -66,7 +82,7 @@ export default function MegaMenuPortal({
         outline-none
       "
     >
-      {/* Cursor-follow glow */}
+      {/* Cursor glow */}
       <div
         className="pointer-events-none absolute inset-0 rounded-3xl"
         style={{
@@ -78,7 +94,6 @@ export default function MegaMenuPortal({
         }}
       />
 
-      {/* Content */}
       <div className="relative grid grid-cols-2 gap-8">
         {data.sections.map((section: any) => (
           <div key={section.title}>
@@ -100,7 +115,9 @@ export default function MegaMenuPortal({
                       : "hover:bg-indigo-500/10"
                   }`}
                 >
-                  <p className="font-medium">{item.label}</p>
+                  <p className="font-medium text-[var(--nav-text)]">
+                    {item.label}
+                  </p>
                   {item.description && (
                     <p className="text-sm text-gray-500">
                       {item.description}
