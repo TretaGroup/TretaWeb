@@ -12,6 +12,9 @@
   --text-color : #171717;
   --text-color-2: #000000;
 
+    --foreground-text : #ededed;
+  --foreground-text-2 : #ffffff;
+
 
   --glass-bg: rgba(0, 0, 0, 0.55);
   --glass-border: rgba(255, 255, 255, 0.12);
@@ -38,6 +41,9 @@ html.dark {
 
   --text-color : #ededed;
   --text-color-2 : #ffffff;
+
+  --foreground-text : #171717;
+  --foreground-text-2: #000000;
 }
 
 /* =========================

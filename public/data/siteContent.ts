@@ -1,6 +1,13 @@
 import { HeroSlide } from "@/src/types/heroslide";
 
+/* =========================
+   SITE CONTENT
+   ========================= */
+
 export const siteContent = {
+  /* =========================
+     NAVIGATION
+     ========================= */
   navigation: [
     {
       label: "What We Do",
@@ -11,12 +18,14 @@ export const siteContent = {
           items: [
             {
               label: "Transaction Advisory",
-              description: "End-to-end support across acquisitions, divestments and investments.",
+              description:
+                "End-to-end support across acquisitions, divestments and investments.",
               href: "#what-we-do",
             },
             {
               label: "Group & Business Restructuring",
-              description: "Simplifying structures and unlocking value.",
+              description:
+                "Simplifying structures and unlocking long-term value.",
               href: "#what-we-do",
             },
           ],
@@ -26,12 +35,14 @@ export const siteContent = {
           items: [
             {
               label: "Tax & Regulatory Structuring",
-              description: "Direct, indirect tax and FEMA driven advisory.",
+              description:
+                "Direct, indirect tax and FEMA driven advisory.",
               href: "#what-we-do",
             },
             {
               label: "International Tax & Transfer Pricing",
-              description: "Inbound, outbound and cross-border advisory.",
+              description:
+                "Inbound, outbound and cross-border advisory.",
               href: "#what-we-do",
             },
           ],
@@ -41,29 +52,38 @@ export const siteContent = {
           items: [
             {
               label: "Fund Raise, Valuation & CFO Services",
-              description: "Capital, valuation and financial leadership.",
+              description:
+                "Capital, valuation and financial leadership.",
               href: "#what-we-do",
             },
             {
               label: "Governance, Compliance & Litigation",
-              description: "Representation, compliance and dispute support.",
+              description:
+                "Representation, compliance and dispute support.",
               href: "#what-we-do",
             },
           ],
         },
       ],
     },
-    { label: "Values", href: "#values" },
-    { label: "Why Treta", href: "#why" },
+    { label: "Values", href: "#our-philosophy" },
+    { label: "Why Treta", href: "#why-treta" },
+    { label: "Team", href: "#team" },
     { label: "Contact", href: "#contact" },
   ],
 
+  /* =========================
+     SEO
+     ========================= */
   seo: {
     title: "Treta Group — Transactions, Tax & Strategic Advisory",
     description:
       "Treta Group provides transaction, tax, restructuring and strategic advisory services with a strong commercial mindset and practical implementation.",
   },
 
+  /* =========================
+     HERO
+     ========================= */
   hero: {
     slides: [
       {
@@ -95,12 +115,15 @@ export const siteContent = {
         parallax: 0.15,
         cta: {
           primary: { label: "Our Services", href: "#what-we-do" },
-          secondary: { label: "Why Treta", href: "#why" },
+          secondary: { label: "Why Treta", href: "#why-treta" },
         },
       },
     ] satisfies HeroSlide[],
   },
 
+  /* =========================
+     WHAT WE DO
+     ========================= */
   whatWeDo: {
     title: "What We Do",
     subtitle:
@@ -139,5 +162,69 @@ export const siteContent = {
     ],
   },
 
-  
+  /* =========================
+     OUR PHILOSOPHY / VALUES
+     ========================= */
+  philosophy: {
+    title: "Our Philosophy / Values",
+    subtitle:
+      "What we stand for and how we consistently deliver meaningful outcomes.",
+    items: [
+      {
+        title: "Kaizen – Continuous Improvement",
+        description:
+          "We embrace the philosophy of continuous improvement by constantly refining our processes, workflows and thinking through incremental yet impactful changes.",
+      },
+      {
+        title: "Expanding the Art of Possible",
+        description:
+          "We challenge perceived limitations and explore new possibilities through innovation, creativity and forward-thinking advisory.",
+      },
+      {
+        title: "Clients Come First",
+        description:
+          "We prioritize client needs above all else, building long-term relationships through trust, responsiveness and exceptional service.",
+      },
+      {
+        title: "Value Delivery",
+        description:
+          "Our focus is on delivering measurable value by aligning advisory solutions with evolving client needs and business realities.",
+      },
+      {
+        title: "Integrity",
+        description:
+          "We operate with the highest standards of honesty, ethics and transparency, always striving to do the right thing.",
+      },
+      {
+        title: "Ubuntu",
+        description:
+          "We believe in collaboration, empathy and shared success, recognizing the interconnectedness of people, businesses and society.",
+      },
+    ],
+  },
+
+  /* =========================
+     WHY TRETA (OPTIONAL NEXT)
+     ========================= */
+  whyTreta: {
+    title: "Why Treta",
+    points: [
+      "Strong commercial mindset with practical implementation focus",
+      "Integrated advisory across tax, finance, law and strategy",
+      "Deep experience across industries and transaction lifecycles",
+      "Partner-led execution with senior involvement",
+      "Long-term relationship driven advisory",
+    ],
+  },
+
+  /* =========================
+     CONTACT
+     ========================= */
+  contact: {
+    title: "Let’s Talk",
+    subtitle: "We’d love to discuss your business ideas and challenges.",
+    phone: "+91 85000 14433",
+    email: "support@tretagroup.com",
+    website: "https://tretagroup.com",
+  },
 };
