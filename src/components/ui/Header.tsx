@@ -8,7 +8,14 @@ import ThemeToggle from "./ThemeToggle";
 import SearchOverlay from "./SearchOverlay";
 import MegaMenuPortal from "./MegaMenuPortal";
 import { useHoverIntent } from "./useHoverIntent";
-import { Search, Menu, X, ChevronDown } from "lucide-react";
+import {
+  Search,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { caldina } from "@/src/app/fonts";
 
 export default function Header() {
@@ -16,14 +23,27 @@ export default function Header() {
   const [activeMega, setActiveMega] = useState<any>(null);
   const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false); // ✅ REQUIRED
+  const [mobileOpen, setMobileOpen] = useState(false);
 
+  /* 🔥 MOBILE SLIDER STATE */
+  const [[slide, direction], setSlide] = useState<[number, number]>([0, 0]);
+  const slides = siteContent.navigation;
+
+  const paginate = (dir: number) => {
+    setSlide(([i]) => [
+      (i + dir + slides.length) % slides.length,
+      dir,
+    ]);
+  };
+
+  /* SCROLL */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* KEYS */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -34,6 +54,8 @@ export default function Header() {
         setActiveMega(null);
         setMobileOpen(false);
       }
+      if (e.key === "ArrowRight") paginate(1);
+      if (e.key === "ArrowLeft") paginate(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -53,53 +75,41 @@ export default function Header() {
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <Link
             href="/"
-           className="
-            font-extrabold text-3xl
-            bg-[linear-gradient(90deg,#FD3516_0%,#F96229_33%,#F9812B_66%,#FEB125_100%)]
-            bg-clip-text  
-            text-transparent
-          "
-
+            className="font-extrabold text-3xl bg-[linear-gradient(90deg,#FD3516,#FEB125)] bg-clip-text text-transparent"
             style={caldina.style}
           >
             #TRETA
           </Link>
 
-
           {/* DESKTOP NAV */}
           <nav className="hidden md:flex gap-10">
-            {siteContent.navigation.map((nav: any) => {
+            {slides.map((nav: any) => {
               const ref = useRef<HTMLButtonElement>(null);
               const hover = useHoverIntent(
                 () => {
-                  requestAnimationFrame(() => {
-                    const rect = ref.current?.getBoundingClientRect();
-                    if (!rect) return;
-                    setAnchorRect(rect);
-                    setActiveMega(nav);
-                  });
+                  const rect = ref.current?.getBoundingClientRect();
+                  if (!rect) return;
+                  setAnchorRect(rect);
+                  setActiveMega(nav);
                 },
-                () => setActiveMega(null)
+                () => {
+                  // ❌ intentionally empty
+                }
               );
+
 
               return nav.type === "mega" ? (
                 <button
                   key={nav.label}
                   ref={ref}
                   {...hover}
-                  className="relative font-medium text-[var(--nav-text)] group"
+                  className="relative font-medium cursor-pointer text-[var(--nav-text)]"
                 >
                   {nav.label}
-                  <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-gradient-to-r from-indigo-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition origin-left" />
                 </button>
               ) : (
-                <Link
-                  key={nav.label}
-                  href={nav.href}
-                  className="relative font-medium text-[var(--nav-text)] group"
-                >
+                <Link className="text-[var(--nav-text)]" key={nav.label} href={nav.href}>
                   {nav.label}
-                  <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-gradient-to-r from-indigo-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition origin-left" />
                 </Link>
               );
             })}
@@ -107,14 +117,11 @@ export default function Header() {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
-            <button onClick={() => setSearchOpen(true)} className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 transition cursor-pointer">
+            <button className="text-[var(--nav-text)]" onClick={() => setSearchOpen(true)}>
               <Search size={18} />
             </button>
             <ThemeToggle />
-            <button
-              onClick={() => setMobileOpen(true)}
-              className="md:hidden"
-            >
+            <button className="text-[var(--nav-text)] md:hidden" onClick={() => setMobileOpen(true)} >
               <Menu />
             </button>
           </div>
@@ -125,117 +132,93 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* BACKDROP */}
             <motion.div
+              className="fixed inset-0 bg-black/50 z-40"
+              onClick={() => setMobileOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 z-[998] bg-black/50 backdrop-blur-sm md:hidden"
             />
 
-            {/* BOTTOM SHEET */}
             <motion.div
+              className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-[var(--glass-bg)] backdrop-blur-2xl p-6"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 28,
-              }}
-              drag="y"
-              dragConstraints={{ top: 0 }}
-              dragElastic={0.15}
-              onDragEnd={(_, info) => {
-                if (info.offset.y > 120 || info.velocity.y > 800) {
-                  setMobileOpen(false);
-                }
-              }}
-              className="
-          fixed bottom-0 left-0 right-0 z-[999]
-          max-h-[85vh]
-          rounded-t-3xl
-          bg-[var(--glass-bg)]
-          backdrop-blur-2xl
-          border-t border-[var(--glass-border)]
-          shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.5)]
-          p-6
-          overscroll-contain
-          md:hidden
-        "
             >
-              {/* DRAG HANDLE */}
-              <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-gray-400/40" />
-
               {/* HEADER */}
-              <div className="mb-6 flex items-center justify-between">
-               <span
-           className="
-            font-extrabold text-3xl
-            bg-[linear-gradient(90deg,#FD3516_0%,#F96229_33%,#F9812B_66%,#FEB125_100%)]
-            bg-clip-text  
-            text-transparent
-          "
-
-            style={caldina.style}
-          >
-            #TRETA
-          </span>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-2xl font-bold" style={caldina.style}>
+                  #TRETA
+                </span>
                 <button onClick={() => setMobileOpen(false)}>
                   <X />
                 </button>
               </div>
 
-              {/* NAV */}
-              <nav className="space-y-6 overflow-y-auto pb-6">
-                {siteContent.navigation.map((nav: any) =>
-                  nav.type === "mega" ? (
-                    <details key={nav.label} className="group">
-                      <summary className="flex cursor-pointer items-center justify-between text-lg font-semibold">
-                        {nav.label}
-                        <ChevronDown className="transition group-open:rotate-180" />
-                      </summary>
+              {/* SLIDER */}
+              <div className="relative overflow-hidden">
+                <AnimatePresence initial={false} custom={direction}>
+                  <motion.div
+                    key={slide}
+                    custom={direction}
+                    initial={{ x: direction > 0 ? 200 : -200, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: direction > 0 ? -200 : 200, opacity: 0 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <nav className="space-y-4">
+                      <h3 className="text-lg font-semibold">
+                        {slides[slide].label}
+                      </h3>
 
-                      <div className="mt-4 space-y-4 pl-4">
-                        {nav.sections.flatMap((s: any) =>
+                      {slides[slide].type === "mega"
+                        ? slides[slide].sections.flatMap((s: any) =>
                           s.items.map((i: any) => (
                             <Link
                               key={i.label}
                               href={i.href}
                               onClick={() => setMobileOpen(false)}
-                              className="block"
+                              className="block text-[var(--nav-text)]"
                             >
-                              <p className="font-medium">{i.label}</p>
-                              {i.description && (
-                                <p className="text-sm text-gray-400">
-                                  {i.description}
-                                </p>
-                              )}
+                              {i.label}
                             </Link>
                           ))
+                        )
+                        : (
+                          <Link
+                            href={slides[slide].href || "#"}
+                            onClick={() => setMobileOpen(false)}
+                            className="text-[var(--nav-text)]"
+                          >
+                            Go to {slides[slide].label}
+                          </Link>
                         )}
-                      </div>
-                    </details>
-                  ) : (
-                    <Link
-                      key={nav.label}
-                      href={nav.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block text-lg font-semibold"
-                    >
-                      {nav.label}
-                    </Link>
-                  )
-                )}
-              </nav>
+                    </nav>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* ARROWS */}
+                <button
+                  onClick={() => paginate(-1)}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 text-[var(--nav-text)]"
+                >
+                  <ChevronLeft />
+                </button>
+
+                <button
+                  onClick={() => paginate(1)}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--nav-text)]"
+                >
+                  <ChevronRight />
+                </button>
+              </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
 
-
-      {/* MEGA MENU PORTAL */}
+      {/* MEGA MENU */}
       <AnimatePresence>
         {activeMega && (
           <MegaMenuPortal
