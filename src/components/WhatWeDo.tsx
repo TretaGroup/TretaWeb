@@ -1,39 +1,40 @@
 "use client";
 
 import { motion, Variants, useReducedMotion } from "framer-motion";
-import {
-  Briefcase,
-  Scale,
-  Shuffle,
-  Globe,
-  LineChart,
-  ShieldCheck,
-} from "lucide-react";
-import { siteContent } from "@/public/data/siteContent";
-import { JSX } from "react";
 import { useRouter } from "next/navigation";
+import { WhatWeDoProps } from "@/src/types/pages";
+import SectionHeader from "./ui/SectionHeader";
 
 /* =========================
-   TYPES
+   COLOR SYSTEM (UNCHANGED)
    ========================= */
 
-type WhatWeDoItem = {
-  title: keyof typeof iconMap;
-  description: string;
-};
+const ACCENT_BORDERS = [
+  "from-indigo-500/40",
+  "from-emerald-500/40",
+  "from-rose-500/40",
+  "from-amber-500/40",
+  "from-cyan-500/40",
+  "from-violet-500/40",
+];
 
-/* =========================
-   ICON MAP
-   ========================= */
+const ACCENT_BORDERS_MAIN = [
+  "from-indigo-500 to-indigo-400",
+  "from-emerald-500 to-emerald-400",
+  "from-rose-500 to-rose-400",
+  "from-amber-500 to-amber-400",
+  "from-cyan-500 to-cyan-400",
+  "from-violet-500 to-violet-400",
+];
 
-const iconMap = {
-  "Transaction & Deal Advisory": <Briefcase size={28} />,
-  "Tax & Regulatory Structuring": <Scale size={28} />,
-  "Business & Group Restructuring": <Shuffle size={28} />,
-  "International Tax & Cross-border Advisory": <Globe size={28} />,
-  "Fund Raise, Valuation & CFO Services": <LineChart size={28} />,
-  "Governance, Compliance & Litigation": <ShieldCheck size={28} />,
-} satisfies Record<string, JSX.Element>;
+const ICON_COLORS = [
+  "text-indigo-500",
+  "text-emerald-500",
+  "text-rose-500",
+  "text-amber-500",
+  "text-cyan-500",
+  "text-violet-500",
+];
 
 /* =========================
    HELPERS
@@ -46,13 +47,7 @@ const slugify = (value: string) =>
    COMPONENT
    ========================= */
 
-export default function WhatWeDo() {
-  const { title, subtitle, items } = siteContent.whatWeDo as {
-    title: string;
-    subtitle: string;
-    items: WhatWeDoItem[];
-  };
-
+export default function WhatWeDo({ header, items }: WhatWeDoProps) {
   const router = useRouter();
   const reduceMotion = useReducedMotion();
 
@@ -72,47 +67,16 @@ export default function WhatWeDo() {
     },
   };
 
-  const handleClick = (item: WhatWeDoItem) => {
-    const slug = slugify(item.title);
-
-    /* Analytics hook */
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(
-        new CustomEvent("analytics:event", {
-          detail: {
-            event: "service_card_click",
-            service: item.title,
-          },
-        })
-      );
-    }
-
-    router.push(`/services/${slug}`);
-  };
-
   return (
-    <section
-      id="what-we-do"
-      className="py-28 bg-[var(--background)] transition-colors"
-    >
+    <section id="what-we-do" className="py-28 bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-4xl md:text-5xl font-semibold ttext-[var(--text-color-2)">
-            {title}
-          </h2>
-          <p className="mt-6 text-lg text-[var(--text-color) max-w-4xl mx-auto">
-            {subtitle}
-          </p>
+
+        {/* ================= HEADER ================= */}
+        <motion.div className="text-center mb-20">
+          <SectionHeader title={header.title} eyebrow={header.eyebrow} description={header.description} align="center" />
         </motion.div>
 
-        {/* Cards */}
+        {/* ================= CARDS ================= */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -120,63 +84,52 @@ export default function WhatWeDo() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {items.map((item) => (
+          {items.map((item, index) => (
             <motion.button
               key={item.title}
               variants={cardVariants}
-              onClick={() => handleClick(item)}
               whileHover={reduceMotion ? {} : { y: -6 }}
+              onClick={() => router.push(`/services/${slugify(item.title)}`)}
               className="
-                group relative text-left rounded-2xl p-8
+                group relative text-left rounded-2xl overflow-hidden cursor-pointer
                 border border-[var(--glass-border-cards)]
                 bg-[var(--glass-bg-cards)]
                 backdrop-blur-xl
                 shadow-sm hover:shadow-2xl
-                transition-all duration-300
-                overflow-hidden cursor-pointer
+                transition-all duration-300 flex flex-col items-start justify-start
               "
             >
-              {/* Shimmer */}
-              <span
-                className="
-                  pointer-events-none absolute inset-0
-                  bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.05),transparent)]
-                  bg-size-[200%_100%]
-                  opacity-0 group-hover:opacity-100
-                  animate-[shine_1.4s_linear_infinite]
-                "
-              />
 
-              {/* Icon */}
-              <div
-                className="
-                  mb-6 inline-flex items-center justify-center
-                  rounded-xl p-3
-                  bg-neutral-100 dark:bg-neutral-800
-                  text-neutral-800 dark:text-neutral-100
-                "
-              >
-                {iconMap[item.title]}
+              {/* ================= IMAGE ================= */}
+              {item.image && (
+                <div className="relative min-h-40 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+                </div>
+              )}
+
+              {/* ================= CONTENT ================= */}
+              <div className="p-8">
+
+                {/* Title */}
+                <h3 className="text-xl font-semibold text-[var(--text-color-2)] mb-4">
+                  {item.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm leading-relaxed text-[var(--text-color)]">
+                  {item.description}
+                </p>
               </div>
 
-              {/* Title */}
-              <h3 className="text-xl font-semibold text-[var(--text-color-2)] mb-4">
-                {item.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-                {item.description}
-              </p>
-
-              {/* Accent */}
+              {/* Bottom accent */}
               <span
-                className="
-                  absolute inset-x-0 bottom-0 h-0.5
-                  bg-[var(--text-color-2)]
-                  scale-x-0 group-hover:scale-x-100
-                  transition-transform origin-left
-                "
+                className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${ACCENT_BORDERS_MAIN[index % ACCENT_BORDERS_MAIN.length]} scale-x-0 group-hover:scale-x-100 transition-transform origin-left`}
               />
             </motion.button>
           ))}

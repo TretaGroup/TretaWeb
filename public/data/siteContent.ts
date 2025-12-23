@@ -1,11 +1,8 @@
-import { HeroSlide } from "@/src/types/heroslide";
-
-/* =========================
-   SITE CONTENT
-   ========================= */
+import { HeroSlide } from "@/src/types/pages";
 
 export const siteContent = {
-  /* =========================
+
+   /* =========================
      NAVIGATION
      ========================= */
   navigation: [
@@ -80,7 +77,6 @@ export const siteContent = {
     description:
       "Treta Group provides transaction, tax, restructuring and strategic advisory services with a strong commercial mindset and practical implementation.",
   },
-
   /* =========================
      HERO
      ========================= */
@@ -91,12 +87,12 @@ export const siteContent = {
         title: "Advisory that drives outcomes",
         subtitle:
           "Strategic, tax-efficient and commercially viable solutions across the business lifecycle.",
+        animation: "fadeUp",
+        parallax: 0.25,
         media: {
           type: "image",
           src: "/images/hero/strategy.jpg",
         },
-        animation: "fadeUp",
-        parallax: 0.25,
         cta: {
           primary: { label: "Talk to Us", href: "#contact" },
           secondary: { label: "What We Do", href: "#what-we-do" },
@@ -107,12 +103,12 @@ export const siteContent = {
         title: "From structuring to execution",
         subtitle:
           "We partner with businesses, promoters and investors to create long-term value.",
+        animation: "slideLeft",
+        parallax: 0.15,
         media: {
           type: "image",
           src: "/images/hero/treta-transactions.jpg",
         },
-        animation: "slideLeft",
-        parallax: 0.15,
         cta: {
           primary: { label: "Our Services", href: "#what-we-do" },
           secondary: { label: "Why Treta", href: "#why-treta" },
@@ -125,106 +121,141 @@ export const siteContent = {
      WHAT WE DO
      ========================= */
   whatWeDo: {
-    title: "What We Do",
-    subtitle:
-      "We advise businesses, promoters, families and investors on structuring, transactions, taxation and governance with a clear focus on value creation and implementation.",
+    header: {
+      eyebrow: "Services",
+      title: "What We Do",
+      description:
+        "We advise businesses, promoters, families and investors on structuring, transactions, taxation and governance with a focus on value creation.",
+    },
     items: [
       {
         title: "Transaction & Deal Advisory",
         description:
-          "Advisory across acquisitions, divestments, investments and strategic transactions with integrated commercial, financial and tax evaluation.",
+          "Integrated advisory across acquisitions, divestments, investments and strategic transactions.",
+        image: "/images/hero/strategy.jpg"
       },
       {
         title: "Tax & Regulatory Structuring",
         description:
-          "Design and implementation of efficient structures across direct tax, indirect tax, FEMA, company law and sectoral regulations.",
+          "Efficient structuring across direct tax, indirect tax, FEMA and regulatory frameworks.",
+        image: "/images/hero/strategy.jpg"
+
       },
       {
         title: "Business & Group Restructuring",
         description:
-          "Simplification of complex group structures, asset rationalization, cost optimization and resolution of inefficiencies.",
+          "Simplification of complex structures to unlock operational and financial efficiency.",
+        image: "/images/hero/strategy.jpg"
+
       },
       {
         title: "International Tax & Cross-border Advisory",
         description:
-          "Inbound and outbound investment structuring, transfer pricing, expatriate taxation and global tax optimization.",
+          "Inbound and outbound investment structuring, transfer pricing and global tax optimization.",
+        image: "/images/hero/strategy.jpg"
+
       },
       {
         title: "Fund Raise, Valuation & CFO Services",
         description:
-          "Support across fundraising, valuation, financial modelling, cash flow management and strategic CFO services.",
+          "Support across fundraising, valuation, financial modelling and strategic CFO services.",
+        image: "/images/hero/strategy.jpg"
+
       },
       {
         title: "Governance, Compliance & Litigation",
         description:
-          "End-to-end advisory on compliance, regulatory representations, dispute resolution and litigation support.",
+          "Advisory across governance, regulatory compliance, representations and litigation support.",
+        image: "/images/hero/strategy.jpg"
+
       },
     ],
   },
 
   /* =========================
-     OUR PHILOSOPHY / VALUES
+     OUR PHILOSOPHY
      ========================= */
   philosophy: {
-    title: "Our Philosophy / Values",
-    subtitle:
-      "What we stand for and how we consistently deliver meaningful outcomes.",
+    header: {
+      eyebrow: "Values",
+      title: "Our Philosophy",
+      description:
+        "The principles that guide how we think, advise and partner with our clients.",
+    },
     items: [
       {
         title: "Kaizen – Continuous Improvement",
         description:
-          "We embrace the philosophy of continuous improvement by constantly refining our processes, workflows and thinking through incremental yet impactful changes.",
+          "We believe in continuously refining our thinking, processes and execution.",
+          outline: "Continuous improvement through disciplined execution.",
+
+          image: "/images/hero/strategy.jpg"
       },
       {
         title: "Expanding the Art of Possible",
         description:
-          "We challenge perceived limitations and explore new possibilities through innovation, creativity and forward-thinking advisory.",
+          "We challenge conventional boundaries through innovation and forward thinking.",
+          outline: "Challenging constraints through innovation.",
+
       },
       {
         title: "Clients Come First",
         description:
-          "We prioritize client needs above all else, building long-term relationships through trust, responsiveness and exceptional service.",
+          "Long-term relationships built on trust, responsiveness and commitment.",
       },
       {
         title: "Value Delivery",
         description:
-          "Our focus is on delivering measurable value by aligning advisory solutions with evolving client needs and business realities.",
+          "Our focus is on delivering outcomes aligned with business realities.",
       },
       {
         title: "Integrity",
         description:
-          "We operate with the highest standards of honesty, ethics and transparency, always striving to do the right thing.",
+          "We operate with the highest standards of honesty, ethics and transparency.",
       },
       {
         title: "Ubuntu",
         description:
-          "We believe in collaboration, empathy and shared success, recognizing the interconnectedness of people, businesses and society.",
+          "Collaboration, empathy and shared success drive everything we do.",
       },
     ],
   },
 
   /* =========================
-     WHY TRETA (OPTIONAL NEXT)
+     WHY TRETA
      ========================= */
   whyTreta: {
-    title: "Why Treta",
+    header: {
+      eyebrow: "Why Treta",
+      title: "Advisory built on clarity, integrity, and long-term impact",
+      description:
+        "Treta Group is a Hyderabad-based advisory firm partnering with businesses across their lifecycle to create sustainable value.",
+    },
     points: [
-      "Strong commercial mindset with practical implementation focus",
-      "Integrated advisory across tax, finance, law and strategy",
-      "Deep experience across industries and transaction lifecycles",
-      "Partner-led execution with senior involvement",
-      "Long-term relationship driven advisory",
+      {
+        title: "Commercial clarity",
+        description:
+          "Business-first advice balancing tax efficiency, regulatory soundness and practicality.",
+        icon: "Target",
+      },
+      {
+        title: "Integrity at the core",
+        description:
+          "Transparency and ethics guide every recommendation we make.",
+        icon: "ShieldCheck",
+      },
+      {
+        title: "Ecosystem thinking",
+        description:
+          "We align founders, advisors, regulators and capital — not silos.",
+        icon: "Network",
+      },
+      {
+        title: "Long-term value creation",
+        description:
+          "Success measured by sustained outcomes, not short-term transactions.",
+        icon: "TrendingUp",
+      },
     ],
-  },
-
-  /* =========================
-     CONTACT
-     ========================= */
-  contact: {
-    title: "Let’s Talk",
-    subtitle: "We’d love to discuss your business ideas and challenges.",
-    phone: "+91 85000 14433",
-    email: "support@tretagroup.com",
-    website: "https://tretagroup.com",
   },
 };

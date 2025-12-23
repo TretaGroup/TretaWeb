@@ -23,6 +23,9 @@
   --glass-border-cards: rgba(0, 0, 0, 0.12);
 
   --nav-text: rgb(244 244 245);
+  --accent-primary: #FEB125; /* Indigo */
+  --accent-soft: #22c55e;    /* Emerald */
+  --accent-muted: rgba(99,102,241,0.15);
 }
 
 /* Dark mode — controlled ONLY by next-themes */

@@ -117,11 +117,11 @@ export default function Header() {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
-            <button className="text-[var(--nav-text)]" onClick={() => setSearchOpen(true)}>
+            <button className="text-[var(--nav-text)] cursor-pointer" onClick={() => setSearchOpen(true)}>
               <Search size={18} />
             </button>
             <ThemeToggle />
-            <button className="text-[var(--nav-text)] md:hidden" onClick={() => setMobileOpen(true)} >
+            <button className="text-[var(--nav-text)] cursor-pointer md:hidden" onClick={() => setMobileOpen(true)} >
               <Menu />
             </button>
           </div>
@@ -151,7 +151,7 @@ export default function Header() {
                 <span className="text-2xl font-bold" style={caldina.style}>
                   #TRETA
                 </span>
-                <button onClick={() => setMobileOpen(false)}>
+                <button className="cursor-pointer" onClick={() => setMobileOpen(false)}>
                   <X />
                 </button>
               </div>
@@ -201,14 +201,14 @@ export default function Header() {
                 {/* ARROWS */}
                 <button
                   onClick={() => paginate(-1)}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 text-[var(--nav-text)]"
+                  className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 text-[var(--nav-text)]"
                 >
                   <ChevronLeft />
                 </button>
 
                 <button
                   onClick={() => paginate(1)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--nav-text)]"
+                  className="absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 text-[var(--nav-text)]"
                 >
                   <ChevronRight />
                 </button>
