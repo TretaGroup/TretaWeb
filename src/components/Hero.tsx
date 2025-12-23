@@ -10,7 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { heroAnimations } from "@/src/lib/heroAnimations";
 import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
-import { HeroSlide } from "../types/heroslide";
+import { HeroSlide } from "../types/pages";
 
 interface HeroSectionProps {
   slides: HeroSlide[];
@@ -232,7 +232,7 @@ export default function HeroSection({ slides }: HeroSectionProps) {
               key={i}
               onClick={() => setIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`h-2.5 w-2.5 rounded-full transition ${i === index
+              className={`h-2.5 w-2.5 rounded-full cursor-pointer transition ${i === index
                 ? "bg-white scale-125"
                 : "bg-white/40 hover:bg-white/60"
                 }`}

@@ -10,19 +10,11 @@ import {
   ShieldCheck,
   Network,
 } from "lucide-react";
-import { siteContent } from "@/public/data/siteContent";
+import { OurPhilosophyProps } from "@/src/types/pages";
+import SectionHeader from "./ui/SectionHeader";
 
 /* =========================
-   TYPES
-   ========================= */
-
-type PhilosophyItem = {
-  title: string;
-  description: string;
-};
-
-/* =========================
-   ICONS
+   ICONS + COLORS (UNCHANGED)
    ========================= */
 
 const ICONS = [
@@ -34,8 +26,26 @@ const ICONS = [
   Network,
 ];
 
+const ICON_COLORS = [
+  "text-orange-500",
+  "text-emerald-500",
+  "text-rose-500",
+  "text-amber-500",
+  "text-cyan-500",
+  "text-violet-500",
+];
+
+const ACCENT_BORDERS = [
+  "from-orange-500/40",
+  "from-emerald-500/40",
+  "from-rose-500/40",
+  "from-amber-500/40",
+  "from-cyan-500/40",
+  "from-violet-500/40",
+];
+
 /* =========================
-   ANIMATION VARIANTS
+   ANIMATION (UNCHANGED)
    ========================= */
 
 const fadeUp = {
@@ -43,15 +53,9 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-/* =========================
-   COMPONENT
-   ========================= */
-
-export default function OurPhilosophy() {
-  const { items } = siteContent.philosophy as { items: PhilosophyItem[] };
+export default function OurPhilosophy({ header, items }: OurPhilosophyProps) {
   const [active, setActive] = useState<number | null>(null);
 
-  /* Scroll lock for modal */
   useEffect(() => {
     document.body.style.overflow = active !== null ? "hidden" : "";
     return () => {
@@ -59,7 +63,6 @@ export default function OurPhilosophy() {
     };
   }, [active]);
 
-  /* ESC close */
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActive(null);
@@ -79,156 +82,81 @@ export default function OurPhilosophy() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <h2 className="text-2xl font-semibold text-[var(--text-color-2)]">
-            Our Philosophy
-          </h2>
-          <p className="mt-3 text-[var(--text-color)] text-sm leading-relaxed">
-            The principles that guide how we think, advise and partner
-            with our clients.
-          </p>
+          <SectionHeader
+            title={header.title}
+            eyebrow={header.eyebrow}
+            description={header.description}
+            align="left"
+          />
         </motion.div>
 
-        {/* ================= DESKTOP: EXECUTIVE TIMELINE ================= */}
+        {/* ================= DESKTOP ================= */}
         <div className="hidden lg:grid grid-cols-12 gap-12">
 
-          {/* Narrative */}
           <motion.div
             className="col-span-4"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h2 className="text-3xl font-semibold text-[var(--text-color-2)]">
-              Our Philosophy
-            </h2>
-
-            <p className="mt-4 text-[var(--text-color)] leading-relaxed">
-              Our values guide how we think, advise and partner with clients —
-              shaping decisions across transactions, governance and long-term
-              value creation.
-            </p>
-
-            <p className="mt-6 text-sm text-neutral-500">
-              These principles are embedded in how we work every day.
-            </p>
+            <SectionHeader
+              title={header.title}
+              eyebrow={header.eyebrow}
+              description={header.description}
+              align="left"
+            />
           </motion.div>
 
-          {/* Timeline */}
-          <div className="col-span-8 relative">
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-[var(--foreground)]" />
-
-            <div className="space-y-10">
-              {items.map((item, index) => {
-                const Icon = ICONS[index % ICONS.length];
-
-                return (
-                  <motion.div
-                    key={item.title}
-                    className="relative pl-16 group"
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: 0.5,
-                      delay: index * 0.06,
-                      ease: "easeOut",
-                    }}
-                  >
-                    {/* Node */}
-                    <div
-                      className="
-                        absolute left-0 top-1
-                        h-12 w-12 rounded-full
-                        border border-neutral-700
-                        flex items-center justify-center
-                        bg-[var(--foreground)]
-                        text-[var(--foreground-text)]
-                        group-hover:border-neutral-400
-                        transition
-                      "
-                    >
-                      <Icon className="h-5 w-5 opacity-80" />
-                    </div>
-
-                    <span className="text-xs text-neutral-500">
-                      Principle {String(index + 1).padStart(2, "0")}
-                    </span>
-
-                    <h3 className="mt-1 text-lg font-medium text-[var(--text-color-2)]">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-2 text-sm  text-[var(--text-color)] leading-relaxed max-w-xl">
-                      {item.description}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* ================= TABLET: STEPPED ORBIT ================= */}
-        <div className="hidden md:block lg:hidden mt-20">
-          <div className="relative h-115 flex items-center justify-center">
-
-            {/* Center */}
-            <motion.div
-              className="absolute h-40 w-40 rounded-full border border-neutral-700 flex items-center justify-center  text-[var(--text-color-2)] font-medium"
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Our Philosophy
-            </motion.div>
-
+          {/* ================= CARDS ================= */}
+          <motion.div
+            className="col-span-8 grid grid-cols-2 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             {items.map((item, index) => {
               const Icon = ICONS[index % ICONS.length];
-              const stepY = (index - items.length / 2) * 70;
 
               return (
                 <motion.button
                   key={item.title}
+                  variants={fadeUp}
+                  transition={{ delay: index * 0.06 }}
                   onClick={() => setActive(index)}
                   className="
-                    absolute left-1/2
-                    -translate-x-1/2
-                    flex items-center gap-4
-                    border border-neutral-700
-                    rounded-full px-4 py-3
-                    bg-[var(--foreground)]
-                        text-[var(--foreground-text)]
-                    hover:border-neutral-400
-                    transition
+                    group relative text-left rounded-2xl p-8
+                    border border-[var(--glass-border-cards)]
+                    bg-[var(--glass-bg-cards)] cursor-pointer
+                    backdrop-blur-xl
+                    shadow-sm hover:shadow-2xl
+                    transition-all duration-300 overflow-hidden
                   "
-                  style={{
-                    transform: `translate(-50%, ${stepY}px)`,
-                  }}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.45,
-                    delay: index * 0.05,
-                  }}
                 >
-                  <Icon className="h-4 w-4 opacity-80" />
-                  <span className="text-sm">{item.title}</span>
+                  <span
+                    className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${ACCENT_BORDERS[index % ACCENT_BORDERS.length]} to-transparent`}
+                  />
+
+                  <div className="mb-6 inline-flex items-center justify-center">
+                    <Icon
+                      className={`h-6 w-6 ${ICON_COLORS[index % ICON_COLORS.length]}`}
+                    />
+                  </div>
+
+                  <h3 className="text-lg font-medium text-[var(--text-color-2)]">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-[var(--text-color)]">
+                    {item.outline || item.description}
+                  </p>
                 </motion.button>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
-        {/* ================= MOBILE LIST ================= */}
+        {/* ================= MOBILE ================= */}
         <div className="md:hidden space-y-4">
           {items.map((item, index) => {
             const Icon = ICONS[index % ICONS.length];
@@ -237,22 +165,19 @@ export default function OurPhilosophy() {
                 key={item.title}
                 onClick={() => setActive(index)}
                 className="
-                  w-full p-4 rounded-xl
-                  flex items-center gap-4
-                  border border-neutral-700
-                  text-[var(--text-color-2)] text-left
+                  w-full p-5 rounded-xl flex items-center gap-4
+                  border border-[var(--glass-border-cards)]
+                  bg-[var(--glass-bg-cards)] cursor-pointer
+                  backdrop-blur-xl
+                  transition hover:shadow-md
                 "
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.05,
-                }}
               >
-                <Icon className="h-5 w-5 opacity-80" />
-                <span className="font-medium text-[var(--text-color-2)]">{item.title}</span>
+                <Icon
+                  className={`h-5 w-5 ${ICON_COLORS[index % ICON_COLORS.length]}`}
+                />
+                <span className="font-medium text-[var(--text-color)]">
+                  {item.title}
+                </span>
               </motion.button>
             );
           })}
@@ -262,30 +187,37 @@ export default function OurPhilosophy() {
         <AnimatePresence>
           {active !== null && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--background)]/60"
+              className="
+                fixed inset-0 z-50 flex items-center justify-center
+                bg-black/70 backdrop-blur-md
+              "
               onClick={() => setActive(null)}
             >
               <motion.div
-                initial={{ y: 32, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 32, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                className="max-w-xl w-full mx-6 rounded-3xl p-8 bg-[var(--background)]  border border-neutral-700 text-[var(--text-color-2)]"
+                className="max-w-xl w-full mx-6 rounded-3xl p-8 bg-[var(--background)]"
               >
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl font-semibold text-[var(--text-color-2)]">
                   {items[active].title}
                 </h3>
 
-                <p className="mt-4 text-[var(--text-color)] leading-relaxed">
+                {items[active].image && (
+                  <div className="mt-5 overflow-hidden rounded-2xl">
+                    <img
+                      src={items[active].image}
+                      alt={items[active].title}
+                      className="w-full h-48 object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                <p className="mt-5 text-[var(--text-color)] leading-relaxed">
                   {items[active].description}
                 </p>
 
                 <button
-                  className="mt-6 text-sm underline opacity-60"
+                  className="mt-6 text-sm text-[var(--accent-primary)] underline cursor-pointer"
                   onClick={() => setActive(null)}
                 >
                   Close
