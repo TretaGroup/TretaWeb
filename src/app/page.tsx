@@ -1,20 +1,23 @@
-import { siteContent } from "@/public/data/siteContent";
-import PageTransition from "@/src/components/ui/PageTransitionUI";
-import HeroSection from "@/src/components/Hero";
-import WhatWeDo from "@/src/components/WhatWeDo";
-import OurPhilosophy from "@/src/components/OurPhilosophy";
-import WhyTreta from "@/src/components/WhyTreta";
+import About from "../components/About";
+import CaseStudies from "../components/CaseStudies";
+import CTA from "../components/CTA";
+import FAQ from "../components/FAQ";
+import Hero from "../components/Hero";
+import NumbersSection from "../components/NumbersSection";
+import Services from "../components/Services";
+import Values from "../components/Values";
 
-export default function Page() {
+export default function Home() {
   return (
-    <PageTransition>
-      <HeroSection slides={siteContent.hero.slides} />
-
-      <WhatWeDo {...siteContent.whatWeDo} />
-
-      <OurPhilosophy {...siteContent.philosophy} />
-
-      <WhyTreta {...siteContent.whyTreta} />
-    </PageTransition>
+    <div className="min-h-screen">
+      <Hero />
+      <About />
+      <NumbersSection />
+      <Services />
+      <Values />
+      <CaseStudies />
+      <CTA />
+      <FAQ />
+    </div>
   );
 }
