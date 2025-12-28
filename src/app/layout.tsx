@@ -1,13 +1,21 @@
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import ThemeProvider from "../components/ui/ThemeProvider";
-import { siteContent } from "@/public/data/siteContent";
-import Header from "@/src/components/ui/Header";
+import { siteContent } from "../../public/SiteContent/seo";
+import { ClientLayout } from "../components/ClientLayout";
 
 const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME ?? "TRETA";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourdomain.com";
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 export const metadata: Metadata = {
   title: siteContent.seo.title,
   description:
@@ -79,18 +87,36 @@ export const metadata: Metadata = {
     },
   },
 };
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased overflow-x-hidden transition-colors">
-        <ThemeProvider>
-          <Header />
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && prefersDark)) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  max-w-screen overflow-x-hidden`}
+      >
+        <ClientLayout>
           {children}
-        </ThemeProvider>
+        </ClientLayout>
       </body>
     </html>
-
   );
 }
 
