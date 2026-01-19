@@ -1,31 +1,21 @@
-'use client';
-
-import { useEffect } from 'react';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import NumbersSection from '@/components/NumbersSection';
-import Services from '@/components/Services';
-import Values from '@/components/Values';
-import CaseStudies from '@/components/CaseStudies';
-import CTA from '@/components/CTA';
-import FAQ from '@/components/FAQ';
-import { trackPageVisit } from '@/utils/analytics';
+import About from "@/components/home/AboutSection";
+import CaseStudies from "@/components/home/CaseStudies";
+import CTA from "@/components/home/CTA";
+import HeroSection from "@/components/home/HeroSection";
+import NumbersSection from "@/components/home/Numbers";
+import Services from "@/components/home/ServicesSection";
+import Values from "@/components/home/Values";
 
 export default function Home() {
-  useEffect(() => {
-    trackPageVisit('/');
-  }, []);
-
   return (
-    <div className="min-h-screen">
-      <Hero />
+    <>
+      <HeroSection maxZoom={0.19} />
       <About />
       <NumbersSection />
       <Services />
       <Values />
       <CaseStudies />
       <CTA />
-      <FAQ />
-    </div>
+    </>
   );
 }
